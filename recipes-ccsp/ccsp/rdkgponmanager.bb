@@ -14,7 +14,6 @@ PV = "${GIT_TAG}+git${SRCPV}"
 
 EXTRA_OECONF_append  = " --with-ccsp-platform=bcm --with-ccsp-arch=arm "
 
-S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
 
 inherit autotools pkgconfig

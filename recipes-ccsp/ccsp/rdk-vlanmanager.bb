@@ -17,7 +17,6 @@ SRC_URI := "git://github.com/rdkcentral/vlan-manager.git;branch=releases/1.9.0-m
 PV = "${GIT_TAG}+git${SRCPV}"
 #SRCREV = "${AUTOREV}"
 
-S = "${WORKDIR}/git"
 
 inherit autotools pkgconfig
 

@@ -20,9 +20,8 @@ SRC_URI := "git://github.com/rdkcentral/wan-manager.git;branch=releases/2.17.0-m
 PV = "${GIT_TAG}+git${SRCPV}"
 #SRCREV = "${AUTOREV}"
 
-S = "${WORKDIR}/git"
 
-inherit autotools pkgconfig ${@bb.utils.contains("DISTRO_FEATURES", "kirkstone", "python3native", "pythonnative", d)}
+inherit autotools pkgconfig ${@bb.utils.contains_any("DISTRO_FEATURES", "kirkstone wrynose", "python3native", "pythonnative", d)}
 
 export ISRDKB_WAN_UNIFICATION_ENABLED = "${@bb.utils.contains('DISTRO_FEATURES', 'WanManagerUnificationEnable','true','false', d)}"
 export XML_NAME = "${@bb.utils.contains('ISRDKB_WAN_UNIFICATION_ENABLED', 'true','RdkWanManager_v2.xml','RdkWanManager.xml', d)}"
@@ -111,20 +110,20 @@ do_install_append () {
     install -m 644 ${S}/config/${XML_NAME} ${D}/usr/rdk/wanmanager/RdkWanManager.xml
 }
 
-FILES_${PN} = " \
+FILES:${PN} = " \
    ${exec_prefix}/rdk/wanmanager/wanmanager \
    ${exec_prefix}/rdk/wanmanager/netmonitor \
    ${exec_prefix}/rdk/wanmanager/RdkWanManager.xml \
    ${bindir}/* \
 "
 
-FILES_${PN}-dbg = " \
+FILES:${PN}-dbg = " \
     ${exec_prefix}/rdk/wanmanager/.debug \
     /usr/src/debug \
     ${bindir}/.debug \
     ${libdir}/.debug \
 "
-FILES_${PN}-gtest = "\
+FILES:${PN}-gtest = "\
     ${@bb.utils.contains('DISTRO_FEATURES', 'gtestapp', '${bindir}/RdkWanManager_gtest.bin', '', d)} \
 "
 EXTRA_OECONF_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'gtestapp', '--enable-gtestapp', '', d)}"

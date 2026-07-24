@@ -18,7 +18,6 @@ SRC_URI := "git://github.com/rdkcentral/epon-manager.git;branch=releases/1.0.0-m
 PV = "${GIT_TAG}+git${SRCPV}"
 #SRCREV = "${AUTOREV}"
 
-S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
 
 inherit autotools pkgconfig systemd
